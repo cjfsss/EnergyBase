@@ -64,7 +64,7 @@ public abstract class PermissionProgressFragment extends PermissionFragment impl
 
     @Override
     public void hideLoading() {
-        postOnUI(new Runnable() {
+        postOnMain(new Runnable() {
             @Override
             public void run() {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {

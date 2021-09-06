@@ -63,7 +63,7 @@ public abstract class ProgressFragment extends BaseFragment implements IViewLoad
 
     @Override
     public void hideLoading() {
-        postOnUI(new Runnable() {
+        postOnMain(new Runnable() {
             @Override
             public void run() {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
