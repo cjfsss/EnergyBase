@@ -1,9 +1,7 @@
 package hos.base.view;
 
 
-import android.annotation.SuppressLint;
-
-import androidx.arch.core.executor.ArchTaskExecutor;
+import hos.thread.executor.ThreadTaskExecutor;
 
 /**
  * <p>Title: IThread </p>
@@ -16,18 +14,15 @@ import androidx.arch.core.executor.ArchTaskExecutor;
  */
 public interface IThread {
 
-    @SuppressLint("RestrictedApi")
     default void postIo(Runnable runnable) {
-        ArchTaskExecutor.getInstance().executeOnDiskIO(runnable);
+        ThreadTaskExecutor.getInstance().postIo(runnable);
     }
 
-    @SuppressLint("RestrictedApi")
-    default void postToUI(Runnable runnable) {
-        ArchTaskExecutor.getInstance().postToMainThread(runnable);
+    default void postToMain(Runnable runnable) {
+        ThreadTaskExecutor.getInstance().postToMain(runnable);
     }
 
-    @SuppressLint("RestrictedApi")
-    default void postOnUI(Runnable runnable) {
-        ArchTaskExecutor.getInstance().executeOnMainThread(runnable);
+    default void postOnMain(Runnable runnable) {
+        ThreadTaskExecutor.getInstance().postOnMain(runnable);
     }
 }
