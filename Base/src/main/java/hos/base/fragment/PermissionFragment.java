@@ -3,6 +3,7 @@ package hos.base.fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 
 import androidx.activity.result.ActivityResult;
@@ -50,6 +51,10 @@ public abstract class PermissionFragment extends BaseFragment implements IPermis
 
     @Override
     public void requestPermission(@NonNull List<String> permissions) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            onPermissionSuccess();
+            return;
+        }
         int permissionSize = permissions.size();
         String[] permissionArray = permissions.toArray(new String[permissionSize]);
         // 获取需要申请的权限

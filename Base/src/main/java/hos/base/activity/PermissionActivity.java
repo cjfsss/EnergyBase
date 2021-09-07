@@ -54,7 +54,7 @@ public abstract class PermissionActivity extends BaseActivity implements IPermis
 
     @Override
     public void requestPermission(@NonNull List<String> permissions) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             onPermissionSuccess();
             return;
         }
