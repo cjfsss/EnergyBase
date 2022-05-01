@@ -14,7 +14,7 @@ import java.util.List;
  * @version : 1.0
  * @date : 2021/2/2 13:35
  */
-public interface IPermission {
+public interface IPermissionUse {
     /**
      * 申请权限
      *
@@ -37,10 +37,8 @@ public interface IPermission {
     void onPermissionSuccess();
 
     /**
-     * 申请权限失败
-     *
-     * @param permissions      所有的权限
+     * 取消跳转到权限设置界面
      */
-    void onPermissionError(@NonNull List<String> permissions);
+    void cancelPermission();
 
 }

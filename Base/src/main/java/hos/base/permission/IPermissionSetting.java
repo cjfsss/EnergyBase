@@ -15,12 +15,13 @@ import java.util.List;
  */
 public interface IPermissionSetting {
 
-
     /**
      * 跳转到权限设置界面
+     *
      * @param permissions
      */
     void gotoSettingPermission(List<String> permissions);
+
     /**
      * 取消跳转到权限设置界面
      */
@@ -31,6 +32,6 @@ public interface IPermissionSetting {
      *
      * @param permissions 所有的权限
      */
-    void onActivitySettingPermissionResult(@NonNull  List<String> permissions);
+    void onActivitySettingPermissionResult(@NonNull List<String> permissions);
 
 }
