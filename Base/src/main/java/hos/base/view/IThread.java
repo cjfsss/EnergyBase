@@ -1,7 +1,9 @@
 package hos.base.view;
 
 
+import hos.thread.executor.TS;
 import hos.thread.executor.ThreadTaskExecutor;
+import hos.thread.hander.MH;
 
 /**
  * <p>Title: IThread </p>
@@ -15,14 +17,18 @@ import hos.thread.executor.ThreadTaskExecutor;
 public interface IThread {
 
     default void postIo(Runnable runnable) {
-        ThreadTaskExecutor.getInstance().postIo(runnable);
+        TS.postIo(runnable);
+    }
+
+    default void postOnIo(Runnable runnable) {
+        TS.postOnIo(runnable);
     }
 
     default void postToMain(Runnable runnable) {
-        ThreadTaskExecutor.getInstance().postToMain(runnable);
+        MH.postToMain(runnable);
     }
 
     default void postOnMain(Runnable runnable) {
-        ThreadTaskExecutor.getInstance().postOnMain(runnable);
+        MH.postOnMain(runnable);
     }
 }
