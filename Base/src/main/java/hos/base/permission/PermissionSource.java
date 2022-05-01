@@ -24,7 +24,7 @@ import hos.utilx.dialog.TitleDialog;
  * @version : 1.0
  * @date : 2022/5/1 19:16
  */
-public abstract class PermissionSource extends Permission {
+public class PermissionSource extends Permission {
 
     private ActivityResultLauncher<String> permissionLauncher;
 

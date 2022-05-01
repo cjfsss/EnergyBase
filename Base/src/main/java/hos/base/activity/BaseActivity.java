@@ -2,7 +2,6 @@ package hos.base.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,8 +61,5 @@ public abstract class BaseActivity extends AppCompatActivity implements IThread,
         return this;
     }
 
-    @Override
-    public void onViewShowed(@NonNull View view) {
 
-    }
 }

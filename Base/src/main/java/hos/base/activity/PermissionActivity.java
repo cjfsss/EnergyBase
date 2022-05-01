@@ -10,6 +10,7 @@ import java.util.List;
 
 import hos.base.permission.IPermissionUse;
 import hos.base.permission.Permission;
+import hos.base.permission.PermissionSource;
 
 /**
  * <p>Title: PermissionActivity </p>
@@ -34,7 +35,12 @@ public abstract class PermissionActivity extends BaseActivity implements IPermis
     }
 
     @NonNull
-    protected abstract Permission getPermissions();
+    protected Permission getPermissions(){
+        if (mPermission == null) {
+            mPermission = new PermissionSource(this);
+        }
+        return mPermission;
+    }
 
     @Override
     public void requestPermission(@NonNull List<String> permissions) {

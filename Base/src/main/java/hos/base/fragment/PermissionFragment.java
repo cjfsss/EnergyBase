@@ -8,9 +8,9 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-import hos.base.permission.IPermission;
-import hos.base.permission.IPermissionSetting;
+import hos.base.permission.IPermissionUse;
 import hos.base.permission.Permission;
+import hos.base.permission.PermissionSource;
 
 /**
  * <p>Title: PermissionActivity </p>
@@ -21,7 +21,7 @@ import hos.base.permission.Permission;
  * @version : 1.0
  * @date : 2021/2/6 20:19
  */
-public abstract class PermissionFragment extends BaseFragment implements IPermission, IPermissionSetting {
+public abstract class PermissionFragment extends BaseFragment implements IPermissionUse {
 
     @Nullable
     private Permission mPermission;
@@ -34,7 +34,12 @@ public abstract class PermissionFragment extends BaseFragment implements IPermis
     }
 
     @NonNull
-    protected abstract Permission getPermissions();
+    protected Permission getPermissions(){
+        if (mPermission == null) {
+            mPermission = new PermissionSource(this);
+        }
+        return mPermission;
+    }
 
     @Override
     public void requestPermission(@NonNull List<String> permissions) {
