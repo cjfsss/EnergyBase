@@ -1,13 +1,14 @@
 package hos.base.fragment;
 
-import android.app.ProgressDialog;
-
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
 
 import hos.base.view.IViewLoading;
+import hos.util.dialog.DialogInterface;
+import hos.utilx.dialog.ProgressDialog;
 
 /**
  * <p>Title: ProgressActivity </p>
@@ -21,7 +22,7 @@ import hos.base.view.IViewLoading;
 public abstract class ProgressFragment extends BaseFragment implements IViewLoading {
 
     @Nullable
-    private ProgressDialog mProgressDialog;
+    private DialogInterface<?> mProgressDialog;
 
     public ProgressFragment() {
     }
@@ -31,9 +32,9 @@ public abstract class ProgressFragment extends BaseFragment implements IViewLoad
     }
 
     @NonNull
-    private ProgressDialog getProgressDialog() {
+    protected DialogInterface<?> getProgressDialog(){
         if (mProgressDialog == null) {
-            return mProgressDialog = new ProgressDialog(requireActivity());
+            mProgressDialog = new ProgressDialog((AppCompatActivity) requireActivity());
         }
         return mProgressDialog;
     }
@@ -52,12 +53,13 @@ public abstract class ProgressFragment extends BaseFragment implements IViewLoad
     @Override
     public void showLoading(@NonNull String title, boolean isDismissOnBackPressed,
                             boolean isDismissOnTouchOutside) {
-        ProgressDialog progressDialog = getProgressDialog();
-        progressDialog.setTitle(title);
-        progressDialog.setCanceledOnTouchOutside(isDismissOnTouchOutside);
-        progressDialog.setCancelable(isDismissOnBackPressed);
-        if (!progressDialog.isShowing()) {
-            progressDialog.show();
+        if (mProgressDialog == null) {
+            mProgressDialog = getProgressDialog();
+        }
+        mProgressDialog.setTitle(title);
+        mProgressDialog.setCancelable(isDismissOnBackPressed);
+        if (!mProgressDialog.isShowing()) {
+            mProgressDialog.show();
         }
     }
 

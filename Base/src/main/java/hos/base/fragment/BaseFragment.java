@@ -16,8 +16,7 @@ import androidx.fragment.app.FragmentActivity;
 import hos.base.activity.BaseActivity;
 import hos.base.view.IFragmentActivity;
 import hos.base.view.IThread;
-import hos.core.AppCompatApplication;
-import hos.core.compat.AnimCompat;
+import hos.core.ActivityManager;
 
 /**
  * <p>Title: BaseFragment1 </p>
@@ -52,7 +51,7 @@ public abstract class BaseFragment extends Fragment implements IFragmentActivity
             return super.onCreateAnimation(transit, enter, nextAnim);
         }
         if (enter) {
-            Animation animation = AnimCompat.loadAnimation(activity(), nextAnim);
+            Animation animation = loadAnimation(activity(), nextAnim);
             if (animation == null) {
                 return super.onCreateAnimation(transit, enter, nextAnim);
             }
@@ -74,7 +73,7 @@ public abstract class BaseFragment extends Fragment implements IFragmentActivity
             });
             return animation;
         }
-        Animation animation = AnimCompat.loadAnimation(activity(), nextAnim);
+        Animation animation = loadAnimation(activity(), nextAnim);
         if (animation == null) {
             return super.onCreateAnimation(transit, enter, nextAnim);
         }
@@ -92,7 +91,7 @@ public abstract class BaseFragment extends Fragment implements IFragmentActivity
             return super.onCreateAnimator(transit, enter, nextAnim);
         }
         if (enter) {
-            Animator animation = AnimCompat.loadAnimator(activity(), nextAnim);
+            Animator animation = loadAnimator(activity(), nextAnim);
             if (animation == null) {
                 return super.onCreateAnimator(transit, enter, nextAnim);
             }
@@ -106,13 +105,23 @@ public abstract class BaseFragment extends Fragment implements IFragmentActivity
             });
             return animation;
         }
-        Animator animation = AnimCompat.loadAnimator(activity(), nextAnim);
+        Animator animation = loadAnimator(activity(), nextAnim);
         if (animation == null) {
             return super.onCreateAnimator(transit, enter, nextAnim);
         }
         //延迟100毫秒执行让View有一个初始化的时间，防止初始化时刷新页面与动画刷新冲突造成卡顿
         animation.setStartDelay(getStartDelay());
         return animation;
+    }
+
+    @Nullable
+    protected Animation loadAnimation(@NonNull BaseActivity activity, int nextAnim) {
+        return null;
+    }
+
+    @Nullable
+    protected Animator loadAnimator(@NonNull BaseActivity activity, int nextAnim) {
+        return null;
     }
 
     protected long getStartDelay() {
@@ -141,18 +150,13 @@ public abstract class BaseFragment extends Fragment implements IFragmentActivity
     public BaseActivity activity() {
         FragmentActivity activity = getActivity();
         if (activity != null) {
-            if (activity instanceof BaseActivity){
+            if (activity instanceof BaseActivity) {
                 return (BaseActivity) activity;
             }
         }
-        AppCompatApplication application = AppCompatApplication.getAppCompatApplication();
-        if (application != null) {
-            Activity currentActivity = application.getCurrentActivity();
-            if (currentActivity != null) {
-                if (currentActivity instanceof BaseActivity){
-                    return (BaseActivity) currentActivity;
-                }
-            }
+        Activity currentActivity = ActivityManager.getInstance().getTopActivity();
+        if (currentActivity instanceof BaseActivity) {
+            return (BaseActivity) currentActivity;
         }
         return (BaseActivity) requireActivity();
     }

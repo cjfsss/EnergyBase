@@ -1,13 +1,13 @@
 package hos.base.activity;
 
-import android.app.ProgressDialog;
-
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import hos.base.view.IViewLoading;
+import hos.util.dialog.DialogInterface;
+import hos.utilx.dialog.ProgressDialog;
 
 
 /**
@@ -22,20 +22,19 @@ import hos.base.view.IViewLoading;
 public abstract class ProgressActivity extends BaseActivity implements IViewLoading {
 
     @Nullable
-    private ProgressDialog mProgressDialog;
+    private DialogInterface<?> mProgressDialog;
 
     public ProgressActivity() {
     }
 
-//    @ContentView
     public ProgressActivity(@LayoutRes int contentLayoutId) {
         super(contentLayoutId);
     }
 
     @NonNull
-    private ProgressDialog getProgressDialog() {
+    protected DialogInterface<?> getProgressDialog(){
         if (mProgressDialog == null) {
-            return mProgressDialog = new ProgressDialog(this);
+            mProgressDialog = new ProgressDialog(this);
         }
         return mProgressDialog;
     }
@@ -54,18 +53,19 @@ public abstract class ProgressActivity extends BaseActivity implements IViewLoad
     @Override
     public void showLoading(@NonNull String title, boolean isDismissOnBackPressed,
                             boolean isDismissOnTouchOutside) {
-        ProgressDialog progressDialog = getProgressDialog();
-        progressDialog.setTitle(title);
-        progressDialog.setCanceledOnTouchOutside(isDismissOnTouchOutside);
-        progressDialog.setCancelable(isDismissOnBackPressed);
-        if (!progressDialog.isShowing()) {
-            progressDialog.show();
+        if (mProgressDialog == null) {
+            mProgressDialog = getProgressDialog();
+        }
+        mProgressDialog.setTitle(title);
+        mProgressDialog.setCancelable(isDismissOnBackPressed);
+        if (!mProgressDialog.isShowing()) {
+            mProgressDialog.show();
         }
     }
 
     @Override
     public void hideLoading() {
-        runOnUiThread(new Runnable() {
+        postOnMain(new Runnable() {
             @Override
             public void run() {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {

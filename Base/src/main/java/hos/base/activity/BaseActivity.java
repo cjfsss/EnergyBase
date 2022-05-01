@@ -25,6 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IThread,
     public BaseActivity() {
     }
 
+//    @ContentView
     public BaseActivity(int contentLayoutId) {
         super(contentLayoutId);
     }
