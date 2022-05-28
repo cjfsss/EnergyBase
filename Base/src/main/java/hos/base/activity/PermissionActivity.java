@@ -1,6 +1,7 @@
 package hos.base.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -24,7 +25,7 @@ import hos.base.permission.PermissionSource;
 public abstract class PermissionActivity extends BaseActivity implements IPermissionUse {
 
     @Nullable
-    private Permission mPermission;
+    protected Permission mPermission;
 
     public PermissionActivity() {
     }
@@ -32,6 +33,12 @@ public abstract class PermissionActivity extends BaseActivity implements IPermis
     //    @ContentView
     public PermissionActivity(@LayoutRes int contentLayoutId) {
         super(contentLayoutId);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getPermissions();
     }
 
     @NonNull

@@ -1,6 +1,8 @@
 package hos.base.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -24,13 +26,19 @@ import hos.base.permission.PermissionSource;
 public abstract class PermissionFragment extends BaseFragment implements IPermissionUse {
 
     @Nullable
-    private Permission mPermission;
+    protected Permission mPermission;
 
     public PermissionFragment() {
     }
 
     public PermissionFragment(@LayoutRes int contentLayoutId) {
         super(contentLayoutId);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        getPermissions();
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @NonNull
